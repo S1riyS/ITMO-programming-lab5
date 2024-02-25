@@ -152,8 +152,14 @@ public class Product extends ModelWithId implements Comparable<Product>, Validat
         list.add(Long.toString(product.coordinates.getY()));
         list.add(product.creationDate.toString());
         list.add(Long.toString(product.price));
-        list.add(product.partNumber);
-        list.add(product.unitOfMeasure.name());
+
+        String partNumberToAdd = Objects.requireNonNullElse(product.partNumber, "null");
+        list.add(partNumberToAdd);
+
+        String unitOfMeasureToAdd;
+        if (product.unitOfMeasure == null) unitOfMeasureToAdd = "null";
+        else unitOfMeasureToAdd = product.unitOfMeasure.name();
+        list.add(unitOfMeasureToAdd);
 
         if (product.manufacturer == null) {
             for (int i = 0; i < 4; i++) {
@@ -185,8 +191,8 @@ public class Product extends ModelWithId implements Comparable<Product>, Validat
             var coordinateY = Long.parseLong(listOfValues[3]);
             var creationDate = format.parse(listOfValues[4]);
             var price = Long.parseLong(listOfValues[5]);
-            var partNumber = listOfValues[6];
-            var unitOfMeasure = UnitOfMeasure.valueOf(listOfValues[7]);
+            var partNumber = (listOfValues[6].equals("null")) ? null : listOfValues[6];
+            var unitOfMeasure = (listOfValues[7].equals("null")) ? null : UnitOfMeasure.valueOf(listOfValues[7]);
 
             Organization manufacturer;
             boolean manufacturerIsNull = true;
