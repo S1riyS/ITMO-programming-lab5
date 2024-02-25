@@ -13,7 +13,6 @@ import java.util.Objects;
 
 /**
  * Represents a product.
- * This class extends the ModelWithId class and implements the Comparable<Product> and Validatable interfaces.
  */
 public class Product extends ModelWithId implements Comparable<Product>, Validatable {
     private String name; // Field cannot be null, String cannot be empty

@@ -7,7 +7,6 @@ import java.util.Objects;
 
 /**
  * Represents an organization.
- * This class extends the ModelWithId class and implements the Validatable interface.
  */
 public class Organization extends ModelWithId implements Validatable {
     private String name; //Поле не может быть null, Строка не может быть пустой
