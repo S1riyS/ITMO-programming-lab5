@@ -28,6 +28,7 @@ public class Update extends Command {
             if (!collectionManager.getDefaultCollection().containsKey(id)) throw new NotFoundException();
 
             Product product = new ProductForm(console).build();
+            product.setId(id);
             collectionManager.update(id, product);
             console.println("Продукт обновлен! (чтобы посмотреть список всех продуктов, используйте 'show')");
         } catch (NotFoundException e) {
