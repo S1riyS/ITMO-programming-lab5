@@ -1,0 +1,117 @@
+package s1riys.lab5.models;
+
+import s1riys.lab5.models.utils.ModelWithId;
+import s1riys.lab5.models.utils.Validatable;
+
+import java.util.Objects;
+
+/**
+ * Represents an organization.
+ * This class extends the ModelWithId class and implements the Validatable interface.
+ */
+public class Organization extends ModelWithId implements Validatable {
+    private String name; //Поле не может быть null, Строка не может быть пустой
+    private String fullName; //Длина строки не должна быть больше 1336, Поле может быть null
+    private Double annualTurnover; //Поле может быть null, Значение поля должно быть больше 0
+    private int employeesCount; //Значение поля должно быть больше 0
+
+    /**
+     * Constructs an Organization object with the specified parameters.
+     *
+     * @param name           the name of the organization (cannot be null or empty)
+     * @param fullName       the full name of the organization (can be null)
+     * @param annualTurnover the annual turnover of the organization (can be null, must be greater than 0)
+     * @param employeesCount the number of employees in the organization (must be greater than 0)
+     */
+    public Organization(String name, String fullName, Double annualTurnover, int employeesCount) {
+        super();
+        this.name = name;
+        this.fullName = fullName;
+        this.annualTurnover = annualTurnover;
+        this.employeesCount = employeesCount;
+    }
+
+    /**
+     * Returns the name of the organization.
+     *
+     * @return the name of the organization
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Returns the full name of the organization.
+     *
+     * @return the full name of the organization
+     */
+    public String getFullName() {
+        return fullName;
+    }
+
+    /**
+     * Returns the annual turnover of the organization.
+     *
+     * @return the annual turnover of the organization
+     */
+    public Double getAnnualTurnover() {
+        return annualTurnover;
+    }
+
+    /**
+     * Returns the number of employees in the organization.
+     *
+     * @return the number of employees in the organization
+     */
+    public int getEmployeesCount() {
+        return employeesCount;
+    }
+
+    /**
+     * Validates the organization object.
+     *
+     * @return true if the organization is valid, false otherwise
+     */
+    @Override
+    public boolean validate() {
+        if (this.id <= 0) return false;
+        if (this.name == null || name.isEmpty()) return false;
+        if (this.fullName == null || fullName.length() > 1366) return false;
+        if (this.annualTurnover == null || annualTurnover <= 0) return false;
+        if (this.employeesCount <= 0) return false;
+        return true;
+    }
+
+    /**
+     * Returns a string representation of the organization.
+     *
+     * @return a string representation of the organization
+     */
+    @Override
+    public String toString() {
+        return "Organisation{" +
+                "id = " + this.id + ", " +
+                "name = " + this.name + ", " +
+                "fullName = " + this.fullName + ", " +
+                "annualTurnover = " + this.annualTurnover + ", " +
+                "employeesCount = " + this.employeesCount +
+                "}";
+    }
+
+    /**
+     * Checks if this organization is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return true if the organizations are equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Organization organization = (Organization) o;
+        return employeesCount == organization.employeesCount &&
+                Objects.equals(name, organization.name) &&
+                Objects.equals(fullName, organization.fullName) &&
+                Objects.equals(annualTurnover, organization.annualTurnover);
+    }
+}
