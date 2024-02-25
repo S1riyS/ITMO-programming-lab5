@@ -7,6 +7,8 @@ import s1riys.lab5.exceptions.ScriptsRecursionException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class RuntimeManager {
@@ -64,7 +66,7 @@ public class RuntimeManager {
     public ExitCode scriptMode(String filename) {
         scriptStack.add(filename);
 
-        try (Scanner scriptScanner = new Scanner(new File(filename))) {
+        try (Scanner scriptScanner = new Scanner(new File(filename), StandardCharsets.UTF_8)) {
             ExitCode exitCode;
             if (!scriptScanner.hasNext()) throw new NoSuchElementException();
 
@@ -96,7 +98,8 @@ public class RuntimeManager {
         } catch (FileNotFoundException exception) {
             console.printError("Файл со скриптом не найден!");
         } catch (NoSuchElementException exception) {
-            console.printError("Файл со скриптом пуст!");
+            console.printError("Непредвиденный конец файла");
+            interactiveMode();
         } catch (ScriptsRecursionException exception) {
             StringJoiner stringJoiner = new StringJoiner(" -> ");
             for (String scriptName : scriptStack) {
@@ -104,6 +107,8 @@ public class RuntimeManager {
             }
             stringJoiner.add(exception.recursionCause);
             console.printError("Вызванный скрипт порождает рекурсию! (" + stringJoiner + ")");
+        } catch (IOException e) {
+            console.printError("Ошибка чтения");
         } finally {
             scriptStack.remove(scriptStack.size() - 1);
         }
